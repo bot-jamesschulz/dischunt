@@ -28,9 +28,9 @@ export function InputForm() {
   })
  
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const currSearch = new URLSearchParams(searchParams)
+    const currSearch = new URLSearchParams(searchParams);
     currSearch.set('query', data.query)
-
+    
     router.push(`/results?${currSearch.toString()}`)
   }
  

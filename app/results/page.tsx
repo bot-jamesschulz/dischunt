@@ -1,13 +1,13 @@
 "use client"
 
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { InputForm } from "@/components/ui/input-form";
+import Listing from "@/components/listing";
 import Supabase from "@/db/config";
-import { type Database } from '@/db/types';
+import { type DiscSearch } from '@/db/types';
 
-type DiscSearch = Database['public']['Functions']['disc_search']['Returns'];
+
 
 export default function Results() {
     const [listings, setListings] = useState<DiscSearch>([]);
@@ -37,10 +37,8 @@ export default function Results() {
             setLoadingState("loaded");
 
             if (!data?.length) {
-                console.log('2')
                 setLoadingState("no results")
             } else {
-                console.log('3')
                 setListings(data)
             }
         }
@@ -52,14 +50,9 @@ export default function Results() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <InputForm/>
-            {listings.map(({details_url, listing, img_src, price}) => {
-                return (
-                    <a href={details_url} rel="external" target="_blank" key={details_url}>
-                        <Image src={img_src} alt="" width={300} height={300}/>
-                        <div >{listing}: {price}</div>
-                    </a>
-                )
-            })}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border p-10">
+                {listings.map((listingData) => <Listing key={listingData.details_url} discListing={listingData} />)}
+            </div>
         </main>
     );
 }
