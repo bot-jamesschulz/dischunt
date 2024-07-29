@@ -47,13 +47,13 @@ export default function Results() {
 
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <Suspense>
+        <Suspense>
+            <main className="flex min-h-screen flex-col items-center justify-between p-24">
                 <InputForm/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 border p-10">
                     {listings.map((listingData) => <Listing key={listingData.details_url} discListing={listingData} />)}
                 </div>
-            </Suspense>
-        </main>
+            </main>
+        </Suspense>
     );
 }
