@@ -22,7 +22,7 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                         width={500}
                         height={500}
                         alt=""
-                        className="object-cover w-full h-56 sm:w-56 sm:h-full rounded transition-opacity opacity-0 duration-[0.5s]"
+                        className="object-cover w-full h-full rounded transition-opacity opacity-0 duration-[0.5s]"
                         onLoad={(img) => {
                             if (img.target instanceof HTMLElement) {
                                 img.target.classList.remove(
