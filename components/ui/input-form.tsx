@@ -38,7 +38,7 @@ export function InputForm() {
     
     <div className="flex justify-center w-1/2">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6 flex flex-col justify-center content-center">
           <FormField
             control={form.control}
             name="query"
@@ -50,7 +50,7 @@ export function InputForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="w-[200px] self-center">Search</Button>
         </form>
       </Form>
     </div>

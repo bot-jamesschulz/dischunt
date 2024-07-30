@@ -24,7 +24,7 @@ export default function Results() {
             setLoadingState('loading')
 
             const { data, error } = await Supabase.rpc("disc_search", {
-                disc: query
+                query: query
             })
 
             if (error) {
