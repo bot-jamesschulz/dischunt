@@ -43,7 +43,7 @@ export default function Results() {
     }, [searchParams]);
     return (
         <div className="flex min-h-screen flex-col items-center justify-between sm:p-24">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 border sm:p-10 p">
+            <div className="grid grid-cols-2 lg:grid-cols-4 sm:gap-8 border sm:p-10 p">
                 {listings.map((listingData) => <Listing key={listingData.details_url} discListing={listingData} />)}
             </div>
         </div>
