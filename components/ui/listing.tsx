@@ -1,8 +1,5 @@
 "use client"
 
-import {
-    Card
-} from "@/components/ui/card";
 import { type DiscListing } from "@/db/types";
 import Image from "next/image";
 
@@ -18,14 +15,14 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
 
     return (
         <a href={details_url} rel="external" target="_blank">
-            <div className="flex flex-col justify-start items-center overflow-hidden gap-4">
-                <div>
+            <div className="flex flex-col justify-end items-center h-96 overflow-hidden gap-4">
+                <div >
                     <Image
                         src={img_src}
                         width={500}
                         height={500}
                         alt=""
-                        className="object-cover w-full h-56 rounded transition-opacity opacity-0 duration-[0.5s]"
+                        className="object-cover w-full h-56 sm:w-56 sm:h-full rounded transition-opacity opacity-0 duration-[0.5s]"
                         onLoad={(img) => {
                             if (img.target instanceof HTMLElement) {
                                 img.target.classList.remove(
@@ -35,7 +32,7 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                         }}
                     />
                 </div>
-                <div className="grow h-full flex flex-col items-center w-full">
+                <div className="flex flex-col items-center w-full justify-end">
                         <p className="text-sm">
                             {manufacturer}
                         </p>
