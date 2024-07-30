@@ -22,8 +22,8 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                 <div>
                     <Image
                         src={img_src}
-                        width={1000}
-                        height={1000}
+                        width={500}
+                        height={500}
                         alt=""
                         className="object-cover w-full h-56 rounded transition-opacity opacity-0 duration-[0.5s]"
                         onLoad={(img) => {
