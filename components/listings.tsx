@@ -6,7 +6,6 @@ import Listing from "@/components/ui/listing";
 import Supabase from "@/db/config";
 import { type DiscSearch } from '@/db/types';
 
-
 export default function Results() {
     const [listings, setListings] = useState<DiscSearch>([]);
     const [loadingState, setLoadingState] = useState<undefined | 'loading' | 'loaded' | 'no results'>();
@@ -15,7 +14,6 @@ export default function Results() {
     useEffect(() => {
         
         const fetchListings = async () => {
-            
             
             if (!Supabase) return;
 
@@ -44,8 +42,8 @@ export default function Results() {
         fetchListings();
     }, [searchParams]);
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 border p-10">
+        <div className="flex min-h-screen flex-col items-center justify-between sm:p-24">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 border sm:p-10 p">
                 {listings.map((listingData) => <Listing key={listingData.details_url} discListing={listingData} />)}
             </div>
         </div>
