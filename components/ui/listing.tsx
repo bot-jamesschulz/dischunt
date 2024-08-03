@@ -33,21 +33,21 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                     />
                 </div>
                 <div className="flex flex-col items-center w-3/4 justify-end">
-                        <p className="text-sm">
-                            {manufacturer}
-                        </p>
-                        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                            {model}
-                        </h4>
-                        <p className="text-sm text-center py-2">
-                            {listing}
-                        </p>
-                        <p className="text-lg">
-                            {formattedPrice}
-                        </p>   
-                        <p className="text-sm truncate text-slate-400 font-light">
-                            {retailer}
-                        </p> 
+                    <p className="text-sm">
+                        {manufacturer}
+                    </p>
+                    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                        {model}
+                    </h4>
+                    <p className="text-sm text-center py-2">
+                        {listing}
+                    </p>
+                    <p className="text-lg">
+                        {formattedPrice}
+                    </p>   
+                    <p className="text-sm truncate text-slate-400 font-light">
+                        {retailer}
+                    </p> 
                 </div>
             </div>
         </a>

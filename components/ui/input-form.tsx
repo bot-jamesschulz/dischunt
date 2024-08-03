@@ -10,6 +10,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
  
@@ -20,16 +21,18 @@ const FormSchema = z.object({
 export function InputForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const curQuery = searchParams.get('query') || "";
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      query: "",
+      query: curQuery,
     },
   })
  
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const currSearch = new URLSearchParams(searchParams);
     currSearch.set('query', data.query);
+    currSearch.set('page', '1');
     
     router.push(`/results?${currSearch.toString()}`)
   }
@@ -47,6 +50,7 @@ export function InputForm() {
                 <FormControl>
                   <Input placeholder="Halo Wraith" {...field} />
                 </FormControl>
+              <FormMessage />
               </FormItem>
             )}
           />
