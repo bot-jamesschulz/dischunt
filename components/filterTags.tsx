@@ -1,132 +1,96 @@
-
-// import { FilterTag } from '@/components/tag';
-// import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { FilterTag } from '@/components/filterTag';
+import { 
+    useSearchParams, 
+    useRouter, 
+    usePathname 
+} from "next/navigation";
+import allMolds from "@/public/molds";
+import { useFilters } from "@/lib/utils";
+import { type Manufacturers } from './filters';
 
 // type FilterTagsProps = {
-//     resetKeyword: () => void
+//     resetQuery: () => void
 //     resetLocation: () => void
-//     modelsInRange: ModelCount[]
+//     moldsInRange: MoldCount[]
 // }
 
-// function getPriceDescription(minPrice: number, maxPrice: number): string {
-//     if (minPrice === defaultPriceRange[0]) return `Up to ${formatToPrice(maxPrice)}`
-//     if (maxPrice === defaultPriceRange[1]) return `${formatToPrice(minPrice)} and up`
-//     return `${formatToPrice(minPrice)} to ${formatToPrice(maxPrice)}`
-// }
 
-// function getYearDescription(minYear: number, maxYear: number): string {
-//     if (minYear === defaultYearRange[0]) return `Up to ${maxYear}`
-//     if (maxYear === defaultYearRange[1]) return `${minYear} and up`
-//     return `${minYear} to ${maxYear}`
-// }
-
-// export function FilterTags({ 
-//     resetKeyword, 
-//     resetLocation, 
-//     modelsInRange 
-// }: FilterTagsProps) {
-//     const router = useRouter()
-//     const pathname = usePathname()
-//     const searchParams = useSearchParams()
-//     const { 
-//         keywordFilter,
-//         makeFilter, 
-//         modelFilter, 
-//         yearFilter, 
-//         priceFilter, 
-//         rangeFilter,
-//         zip,
-//         hideNullPrices
-//     } = useFilters()
-//     const [minYear, maxYear] = yearFilter
-//     const [minPrice, maxPrice] = priceFilter
-//     const locationDescription = `Within ${rangeFilter} miles of ${zip}`
-//     const priceDescription = getPriceDescription(minPrice, maxPrice)
-//     const yearDescription = getYearDescription(minYear, maxYear)
-//     const currSearch = new URLSearchParams(searchParams)
+export default function FilterTags() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const { query, typeFilter, manufacturerFilter, moldFilter} = useFilters();
+    const currSearch = new URLSearchParams(searchParams);
     
-//     const makeUnselectHandler = (make: string) => {
+    const manufacturerUnselectHandler = (manufacturer: string) => {
   
-//         currSearch.set('page', '1')
-//         const newMakeFilter = currSearch.getAll('make').filter(m => m !== make)
-//         currSearch.delete('make')
-//         newMakeFilter.forEach((m) => {
-//             currSearch.append('make', m)
-//         })
+        currSearch.set('page', '1')
+        const newManufacturerFilter = currSearch.getAll('manufacturer').filter(m => m !== manufacturer)
+        currSearch.delete('manufacturer')
+        newManufacturerFilter.forEach((m) => {
+            currSearch.append('manufacturer', m)
+        })
 
-//         const newModelFilter = currSearch.getAll('model')
-//         currSearch.delete('model')
-//         newModelFilter.forEach((m) => {
-//         const make = modelsInRange.find(opt => opt.model === m)?.make
-//         if (make && newMakeFilter.includes(make)) {
-//             currSearch.append('model', m)
-//         }
-//         })
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
+        // Delete corresponding molds, and re-create mold params
+        const newMoldFilter: string[] = [];
+        newManufacturerFilter.forEach(m => {
+            // Push the molds of the selected manufacturers
+            if (m in allMolds) newMoldFilter.push(...allMolds[m as Manufacturers]); 
+        });
 
-//     const modelUnselectHandler = (model: String) => {
+        // Delete old molds
+        currSearch.delete('mold');
+        // Only add back the molds that are in the new mold filter
+        moldFilter.forEach(mold => {
+            if (newMoldFilter.includes(mold)) {
+                currSearch.append('mold', mold)
+            }
+        })
+        router.push(`${pathname}?${currSearch.toString()}`, { scroll: false })
+    }
+
+    const moldUnselectHandler = (mold: String) => {
   
-//         currSearch.set('page', '1')
-//         currSearch.delete('model', modelFilter.find(m => m === model))
-//         const newModelFilter = currSearch.getAll('model').filter(m => m !== model)
-//         currSearch.delete('model')
-//         newModelFilter.forEach((m) => {
-//         currSearch.append('model', m)
-//         })
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
+        currSearch.set('page', '1')
+        currSearch.delete('mold', moldFilter.find(m => m === mold))
+        const newMoldFilter = currSearch.getAll('mold').filter(m => m !== mold)
+        currSearch.delete('mold')
+        newMoldFilter.forEach((m) => {
+        currSearch.append('mold', m)
+        })
+        router.push(`${pathname}?${currSearch.toString()}`, { scroll: false })
+    }
 
-//     const keywordUnselectHandler = () => {
-//         resetKeyword()
-//         currSearch.set('keyword', '')
-//         currSearch.set('page', '1')
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
+    const typeUnselectHandler = (type: String) => {
+  
+        currSearch.set('page', '1')
+        currSearch.delete('type', typeFilter.find(t => t === type))
+        const newTypeFilter = currSearch.getAll('type').filter(t => t !== type)
+        currSearch.delete('type')
+        newTypeFilter.forEach((t) => {
+        currSearch.append('type', t)
+        })
+        router.push(`${pathname}?${currSearch.toString()}`, { scroll: false })
+    }
 
-//     const positionUnselectHandler = () => {
-//         resetLocation()
-//         currSearch.set('page', '1')
-//         currSearch.set('long', defaultPosition.long.toString())
-//         currSearch.set('lat', defaultPosition.lat.toString())
-//         currSearch.set('range', defaultPosition.range)
-//         currSearch.set('zip', defaultZip)
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
+    const queryUnselectHandler = () => {
+        currSearch.set('query', '')
+        currSearch.set('page', '1')
+        router.push(`${pathname}?${currSearch.toString()}`, { scroll: false })
+    }
 
-//     const priceUnselectHandler = () => {
-//         currSearch.set('page', '1')
-//         currSearch.delete('priceMin')
-//         currSearch.delete('priceMax')
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
-
-//     const yearUnselectHandler = () => {
-//         currSearch.set('page', '1')
-//         currSearch.delete('yearMin')
-//         currSearch.delete('yearMax')
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
-
-//     const hideNullPricesUnselectHandler = () => {
-//         currSearch.set('page', '1')
-//         currSearch.delete('hideNullPrices')
-//         router.push(`${pathname}?${currSearch.toString()}`)
-//     }
-
-//     return (
-//         <div className='flex flex-wrap gap-2 px-2'>
-//             {keywordFilter !== '' && <FilterTag title='KEYWORD' content={keywordFilter} unselectHandler={keywordUnselectHandler} />}
-//             {rangeFilter && rangeFilter !== defaultMileRange && <FilterTag  title='LOCATION' content={locationDescription} unselectHandler={positionUnselectHandler} />}
-//             {JSON.stringify(priceFilter) !== JSON.stringify(defaultPriceRange) && <FilterTag  title='PRICE' content={priceDescription} unselectHandler={priceUnselectHandler} />}
-//             {hideNullPrices && <FilterTag  title='PRICE' content={'Has Price'} unselectHandler={hideNullPricesUnselectHandler} />}
-//             {JSON.stringify(yearFilter) !== JSON.stringify(defaultYearRange) && <FilterTag  title='YEAR' content={yearDescription} unselectHandler={yearUnselectHandler} />}
-//             {makeFilter.map((make) => (
-//                 <FilterTag key={make} title='MAKE' content={make} unselectHandler={makeUnselectHandler} />
-//             ))}
-//             {modelFilter.map((model) => (
-//                 <FilterTag  key={model} title='MODEL' content={model} unselectHandler={modelUnselectHandler} />
-//             ))}
-//         </div>
-//     )
-// }
+    return (
+        <div className='flex flex-wrap gap-2 px-2'>
+            {query !== '' && <FilterTag title='QUERY' content={query} unselectHandler={queryUnselectHandler} />}
+            {typeFilter.map((type) => (
+                <FilterTag key={type} title='DISC TYPE' content={type} unselectHandler={typeUnselectHandler} />
+            ))}
+            {manufacturerFilter.map((manufacturer) => (
+                <FilterTag key={manufacturer} title='BRAND' content={manufacturer} unselectHandler={manufacturerUnselectHandler} />
+            ))}
+            {moldFilter.map((mold) => (
+                <FilterTag  key={mold} title='MOLD' content={mold} unselectHandler={moldUnselectHandler} />
+            ))}
+        </div>
+    )
+}

@@ -9,20 +9,20 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
     const formattedPrice = price.toLocaleString("en-US", {
         style: "currency",
         currency: "USD"
-    })
+    });
     const url = new URL(details_url);
     const retailer = url.hostname;
 
     return (
-        <a href={details_url} rel="external" target="_blank">
+        <a href={details_url} rel="external" target="_blank" className='-11/12 text-ellipsis max-w-80'>
             <div className="flex flex-col justify-end items-center h-96 overflow-hidden gap-4">
-                <div >
+                <div className="h-56 max-w-56">
                     <Image
                         src={img_src}
                         width={500}
                         height={500}
                         alt=""
-                        className="object-cover w-full h-full rounded transition-opacity opacity-0 duration-[0.5s]"
+                        className="object-contain w-full h-full rounded transition-opacity opacity-0 duration-[0.5s]"
                         onLoad={(img) => {
                             if (img.target instanceof HTMLElement) {
                                 img.target.classList.remove(
@@ -32,20 +32,20 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                         }}
                     />
                 </div>
-                <div className="flex flex-col items-center w-3/4 justify-end">
+                <div className="flex flex-col items-center text-ellipsis w-full justify-between h-44">
                     <p className="text-sm">
                         {manufacturer}
                     </p>
-                    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    <h4 className="text-xl font-semibold tracking-tight">
                         {model}
                     </h4>
-                    <p className="text-sm text-center py-2">
+                    <p className="text-sm text-center w-full h-10 text-ellipsis overflow-hidden line-clamp-2">
                         {listing}
                     </p>
                     <p className="text-lg">
                         {formattedPrice}
                     </p>   
-                    <p className="text-sm truncate text-slate-400 font-light">
+                    <p className="text-sm text-center truncate w-full text-slate-400 font-light">
                         {retailer}
                     </p> 
                 </div>

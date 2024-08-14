@@ -1,6 +1,5 @@
 "use client"
 
-import { useSearchParams } from "next/navigation";
 import Listings from '@/components/listings';
 import { InputForm } from '@/components/ui/input-form';
 import { 
@@ -16,15 +15,14 @@ import {
  } from "@/components/filters";
 import Supabase from "@/db/config";
 import allMolds from "@/public/molds";
-import manufacturers from "@/public/manufacturers";
+import SheetFilter from "@/components/sheetFilter";
+import Sort from "@/components/sort";
+import { useFilters } from "@/lib/utils";
 
 export default function Results() {
     const [resultsCount, setResultsCount] = useState(0);
-    const searchParams = useSearchParams();
-    const currSearch = new URLSearchParams(searchParams);
-    const manufacturerFilter= currSearch.getAll("manufacturer");
-    const moldFilter= currSearch.getAll("mold");
-    const query= currSearch.get("query") || "";
+    const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const { query, typeFilter, manufacturerFilter, moldFilter} = useFilters();
 
     const molds = useMemo(() => {
         const result: string[] = [];
@@ -41,25 +39,44 @@ export default function Results() {
     useEffect(() => {
         const fetchResultsCount = async () => {
             if (!Supabase) return;
-            console.log('query', query, manufacturers)
             const { data } = await Supabase.rpc("disc_search_results_count", {
                 query: query,
                 manufacturer_filter: manufacturerFilter,
-                model_filter: moldFilter
+                model_filter: moldFilter,
+                type_filter: typeFilter
             })
             console.log(data)
             setResultsCount(data || 0);
             
         }
         fetchResultsCount();
-    },[moldFilter, manufacturerFilter, query, setResultsCount]);
+    },[moldFilter, manufacturerFilter, typeFilter, query, setResultsCount]);
+
+    // Watch window size to know when to render filter positions
+    useEffect(() => {
+        const handleResize = () => {
+          setIsLargeScreen(window.innerWidth >= 1280);
+        };
+    
+        handleResize(); // Set initial value
+        window.addEventListener('resize', handleResize);
+        
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
     return (
         <Suspense>
             <main className="flex min-h-screen flex-col items-center justify-between pt-12">
                 <InputForm />
-                <div className="flex m-12 gap-12">
-                    <Filters />
+                {isLargeScreen ? 
+                    <Sort className='self-end mr-16'/> :
+                    <div className='flex justify-center w-3/4 mx-auto'><SheetFilter className='grow basis-0'/><Sort className='grow basis-0'/></div>
+                }
+                
+                <div className="flex m-12 gap-12 min-w-11/12 justify-center">
+                    {isLargeScreen && <Filters />}
                     <Listings />
                 </div>
                 <Paginate 

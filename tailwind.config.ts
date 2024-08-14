@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      minWidth: {
+        '11/12': '91.666667%',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
