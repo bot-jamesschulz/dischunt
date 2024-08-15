@@ -39,16 +39,13 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center m-8 sm:m-12 lg:m-24">
       <Suspense>
-        <div className="relative">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
             The largest selection of discs, anywhere.
           </h2>
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
             Exactly the disc you want, at the best price.
           </h3>
-
           <InputForm className={'w-11/12 border-2 shadow-xl my-10'}/>
-        </div>
         <div className="flex flex-wrap gap-8 justify-center items-center text-center">
           {discTypeIconNames.map((iconName, id) => (
             <a href={`/results?query=&page=1&type=${discTypes[id]}`} className='flex flex-col gap-2 justify-center items-center drop-shadow-md md:w-max w-1/3 hover:scale-105 transform transition-transform duration-300' key={id}>
