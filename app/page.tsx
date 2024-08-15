@@ -49,7 +49,7 @@ export default function Home() {
         <InputForm className={'w-11/12 border-2 shadow-xl my-10'}/>
         <div className="flex flex-wrap gap-8 justify-center items-center text-center">
           {discTypeIconNames.map((iconName, id) => (
-            <a href={`/results?query=&page=1&type=${discTypes[id]}`} className='flex flex-col gap-2 justify-center items-center drop-shadow-md w-1/3 ' key={id}>
+            <a href={`/results?query=&page=1&type=${discTypes[id]}`} className='flex flex-col gap-2 justify-center items-center drop-shadow-md md:w-max w-1/3 ' key={id}>
               <Image
                 width={100}
                 height={100}
