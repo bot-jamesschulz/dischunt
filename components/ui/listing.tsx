@@ -32,7 +32,7 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                         }}
                     />
                 </div>
-                <div className="flex flex-col items-center text-ellipsis w-full justify-between h-44">
+                <div className="flex flex-col items-center text-ellipsis w-full justify-between h-36">
                     <p className="text-sm">
                         {manufacturer}
                     </p>
