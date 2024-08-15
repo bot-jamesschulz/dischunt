@@ -23,7 +23,11 @@ const FormSchema = z.object({
   query: z.string(),
 })
  
-export function InputForm() {
+export function InputForm({
+  className 
+}: {
+  className?: string
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const curQuery = searchParams.get('query') || "";
@@ -48,14 +52,14 @@ export function InputForm() {
  
   return (
     
-    <div className="flex justify-center w-2/3 rounded-3xl py-4">
+    <div className="flex justify-center w-full lg:w-2/3 rounded-3xl py-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex justify-center content-center shadow-sm border rounded-xl p-2">
+        <form onSubmit={form.handleSubmit(onSubmit)} className={`flex justify-center content-center shadow-sm border rounded-xl p-2 ${className}`}>
           <FormField
             control={form.control}
             name="query"
             render={({ field }) => (
-              <FormItem className='w-full'>
+              <FormItem className="w-full">
                 <FormControl>
                   <Input className="border-0" placeholder="Search for..." {...field} />
                 </FormControl>

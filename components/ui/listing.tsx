@@ -14,15 +14,15 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
     const retailer = url.hostname;
 
     return (
-        <a href={details_url} rel="external" target="_blank" className='-11/12 text-ellipsis max-w-80'>
+        <a href={details_url} rel="external" target="_blank" className='text-ellipsis max-w-80'>
             <div className="flex flex-col justify-end items-center h-96 overflow-hidden gap-4">
-                <div className="h-56 max-w-56">
+                <div className="h-60 w-60">
                     <Image
                         src={img_src}
                         width={500}
                         height={500}
                         alt=""
-                        className="object-contain w-full h-full rounded transition-opacity opacity-0 duration-[0.5s]"
+                        className="object-contain w-full h-full rounded transition-opacity opacity-0 duration-[1s]"
                         onLoad={(img) => {
                             if (img.target instanceof HTMLElement) {
                                 img.target.classList.remove(

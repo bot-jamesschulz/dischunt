@@ -68,7 +68,7 @@ export default function Results() {
 
     return (
         <Suspense>
-            <main className="flex min-h-screen flex-col items-center justify-between pt-12">
+            <main className="flex min-h-screen flex-col items-center justify-between my-12">
                 <InputForm />
                 {isLargeScreen ? 
                     <Sort className='self-end mr-16'/> :

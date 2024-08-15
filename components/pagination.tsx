@@ -47,7 +47,7 @@ export default function Paginate({ className, resultsCount }: PaginateProps) {
                 {currPage > 1 && (
                     <PaginationContent>
                         <PaginationItem>
-                            <PaginationPrevious href={prevPageHref}/>
+                            <PaginationPrevious rel='prev' href={prevPageHref}/>
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationLink href={firstPageHref}>1</PaginationLink>
@@ -77,7 +77,7 @@ export default function Paginate({ className, resultsCount }: PaginateProps) {
                             <PaginationLink href={lastPageHref}>{pageCount}</PaginationLink>
                         </PaginationItem>
                         <PaginationItem>
-                            <PaginationNext href={nextPageHref} />
+                            <PaginationNext rel='next' href={nextPageHref} />
                         </PaginationItem>
                     </PaginationContent>
                 )}
