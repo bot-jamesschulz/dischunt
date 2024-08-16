@@ -16,7 +16,7 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
     return (
         <a href={details_url} rel="external" target="_blank" className='text-ellipsis max-w-80'>
             <div className="flex flex-col justify-end items-center h-96 overflow-hidden gap-4">
-                <div className="h-60 w-60">
+                <div className="h-52 md:h-60">
                     <Image
                         src={img_src}
                         width={500}
