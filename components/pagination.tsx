@@ -14,32 +14,32 @@ type PaginateProps = {
     resultsCount: number
 }
 
-const pageSize = 30
+const pageSize = 24;
 
 export default function Paginate({ className, resultsCount }: PaginateProps) {
-    const router = useRouter()
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
-    const currSearch = new URLSearchParams(searchParams)
-    const currPage = Number(searchParams.get('page')) || 1
-    const currResults = currPage * pageSize
-    const pageCount = Math.floor(resultsCount / pageSize)
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const currSearch = new URLSearchParams(searchParams);
+    const currPage = Number(searchParams.get('page')) || 1;
+    const currResults = currPage * pageSize;
+    const pageCount = Math.ceil(resultsCount / pageSize);
 
-    const nextPageParams = currSearch
-    nextPageParams.set('page', (Number(currPage) + 1).toString())
-    const nextPageHref = `${pathname}?${nextPageParams}`
+    const nextPageParams = currSearch;
+    nextPageParams.set('page', (Number(currPage) + 1).toString());
+    const nextPageHref = `${pathname}?${nextPageParams}`;
 
-    const prevPageParams = currSearch
-    prevPageParams.set('page', (Number(currPage) - 1).toString())
-    const prevPageHref = `${pathname}?${prevPageParams}`
+    const prevPageParams = currSearch;
+    prevPageParams.set('page', (Number(currPage) - 1).toString());
+    const prevPageHref = `${pathname}?${prevPageParams}`;
 
-    const firstPageParams = currSearch
-    firstPageParams.set('page', '1')
-    const firstPageHref = `${pathname}?${firstPageParams}`
+    const firstPageParams = currSearch;
+    firstPageParams.set('page', '1');
+    const firstPageHref = `${pathname}?${firstPageParams}`;
 
-    const lastPageParams = currSearch
-    lastPageParams.set('page', pageCount.toString())
-    const lastPageHref = `${pathname}?${lastPageParams}`
+    const lastPageParams = currSearch;
+    lastPageParams.set('page', pageCount.toString());
+    const lastPageHref = `${pathname}?${lastPageParams}`;
 
     return (
         <Pagination className={`${className}`}>

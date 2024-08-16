@@ -11,6 +11,7 @@ import {
     type DiscSearch
 } from '@/db/types';
 import { defaultSort } from "@/components/sort"
+import { Loader } from 'lucide-react';
 
 export default function Results() {
     const [listings, setListings] = useState<DiscSearch>([]);
@@ -63,13 +64,14 @@ export default function Results() {
     }, [searchParams]);
     
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between">
+        <div className="flex min-h-screen flex-col items-center justify-between w-full">
             {loadingState === 'no results' && (
                 <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                     No results
                 </h2>
             )}
-            {(loadingState === 'loaded' || loadingState === 'loading') && (
+            {loadingState === "loading" && (<Loader size={30} className="animate-spin" />)}
+            {loadingState === 'loaded' && (
                 <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 sm:gap-8 gap-2 rounded-md sm:p-10 w-full drop-shadow-2xl shadow-lg">
                     {listings.map((listingData) => <Listing key={listingData.details_url} discListing={listingData} />)}
                 </div>

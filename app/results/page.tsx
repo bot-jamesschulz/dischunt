@@ -21,7 +21,7 @@ import { useFilters } from "@/lib/utils";
 
 export default function Results() {
     const [resultsCount, setResultsCount] = useState(0);
-    const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const [isLargeScreen, setIsLargeScreen] = useState(true);
     const { query, typeFilter, manufacturerFilter, moldFilter} = useFilters();
 
     const molds = useMemo(() => {
@@ -75,7 +75,7 @@ export default function Results() {
                     <div className='flex justify-center w-3/4 mx-auto'><SheetFilter className='grow basis-0'/><Sort className='grow basis-0'/></div>
                 }
                 
-                <div className="flex m-12 gap-12 min-w-11/12 justify-center">
+                <div className="flex m-12 gap-12 justify-center w-11/12">
                     {isLargeScreen && <Filters />}
                     <Listings />
                 </div>
