@@ -76,6 +76,8 @@ export function InputForm({
 
       if (!Supabase) return;
 
+      if (listingOptionsRef.current.find(l => l.listing === searchValue)) return;
+
       const res = await Supabase
           .rpc('autocomplete', { search: searchValue})
       
@@ -85,11 +87,6 @@ export function InputForm({
 
           const listings = optionsData.map(o => ({ listing: o.listing, img_src: o.img_src }))
 
-          if (optionsData[0].greatest_sml === 1) {
-              setOpen(false)
-              return
-          }
-
           listingOptionsRef.current = listings
           setListingOptions(listings)
           setOpen(true)
@@ -98,7 +95,7 @@ export function InputForm({
       }
     }
 
-    if (searchValue.length >= minSearchAutocomplete && !listingOptionsRef.current.find(l => l.listing.toLowerCase() === searchValue.toLowerCase())) {
+    if (searchValue.length >= minSearchAutocomplete) {
         handleAutocomplete()
     } else {
         setOpen(false)
@@ -159,22 +156,6 @@ useEffect(() => {
                       >
                       <div className="flex justify-between items-center w-full font-semibold">
                         <div>{listing.listing}</div>
-                        <div className="w-24">
-                          <Image
-                            src={listing.img_src}
-                            width={500}
-                            height={500}
-                            alt=""
-                            className="object-contain w-full h-full rounded transition-opacity opacity-0 duration-[1s]"
-                            onLoad={(img) => {
-                                if (img.target instanceof HTMLElement) {
-                                    img.target.classList.remove(
-                                    "opacity-0"
-                                    );
-                                }
-                            }}
-                          />
-                        </div>
                       </div>
                     </CommandItem>
                     ))}
