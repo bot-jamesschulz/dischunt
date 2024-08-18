@@ -6,7 +6,7 @@ import {
 } from "next/navigation";
 import allMolds from "@/public/molds";
 import { useFilters } from "@/lib/utils";
-import { type Manufacturers } from './filters';
+import { type Brands } from './filters';
 
 // type FilterTagsProps = {
 //     resetQuery: () => void
@@ -19,23 +19,23 @@ export default function FilterTags() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const { query, typeFilter, manufacturerFilter, moldFilter} = useFilters();
+    const { query, typeFilter, brandFilter, moldFilter} = useFilters();
     const currSearch = new URLSearchParams(searchParams);
     
-    const manufacturerUnselectHandler = (manufacturer: string) => {
+    const brandUnselectHandler = (brand: string) => {
   
         currSearch.set('page', '1')
-        const newManufacturerFilter = currSearch.getAll('manufacturer').filter(m => m !== manufacturer)
-        currSearch.delete('manufacturer')
-        newManufacturerFilter.forEach((m) => {
-            currSearch.append('manufacturer', m)
+        const newBrandFilter = currSearch.getAll('brand').filter(m => m !== brand)
+        currSearch.delete('brand')
+        newBrandFilter.forEach((m) => {
+            currSearch.append('brand', m)
         })
 
         // Delete corresponding molds, and re-create mold params
         const newMoldFilter: string[] = [];
-        newManufacturerFilter.forEach(m => {
-            // Push the molds of the selected manufacturers
-            if (m in allMolds) newMoldFilter.push(...allMolds[m as Manufacturers]); 
+        newBrandFilter.forEach(m => {
+            // Push the molds of the selected brands
+            if (m in allMolds) newMoldFilter.push(...allMolds[m as Brands]); 
         });
 
         // Delete old molds
@@ -85,8 +85,8 @@ export default function FilterTags() {
             {typeFilter.map((type) => (
                 <FilterTag key={type} title='DISC TYPE' content={type} unselectHandler={typeUnselectHandler} />
             ))}
-            {manufacturerFilter.map((manufacturer) => (
-                <FilterTag key={manufacturer} title='BRAND' content={manufacturer} unselectHandler={manufacturerUnselectHandler} />
+            {brandFilter.map((brand) => (
+                <FilterTag key={brand} title='BRAND' content={brand} unselectHandler={brandUnselectHandler} />
             ))}
             {moldFilter.map((mold) => (
                 <FilterTag  key={mold} title='MOLD' content={mold} unselectHandler={moldUnselectHandler} />

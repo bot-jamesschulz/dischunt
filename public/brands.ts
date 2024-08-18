@@ -1,4 +1,4 @@
-const manufacturers = [
+const brands = [
     "Axiom",
     "Clash",
     "DGA",
@@ -17,4 +17,4 @@ const manufacturers = [
     "Westside"
 ];
 
-export default manufacturers;
+export default brands;

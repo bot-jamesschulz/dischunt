@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { InputForm } from "@/components/ui/input-form";
-import manufacturers from "@/public/manufacturers";
+import brands from "@/public/brands";
 import { Suspense } from "react";
 
 const brandIconNames = [
@@ -63,7 +63,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 sm:gap-8 gap-2 rounded-md sm:p-10 w-full drop-shadow-2xl">
           {brandIconNames.map((iconName, id) => (
-            <a href={`/results?query=&page=1&manufacturer=${manufacturers[id]}`} className='flex justify-center items-center hover:scale-110 transform transition-transform duration-300' key={id}>
+            <a href={`/results?query=&page=1&brand=${brands[id]}`} className='flex justify-center items-center hover:scale-110 transform transition-transform duration-300' key={id}>
               <div className="">
                 <Image
                   width={100}

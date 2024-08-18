@@ -10,35 +10,32 @@ import Supabase from "@/db/config";
 import { 
     type DiscSearch
 } from '@/db/types';
-import { defaultSort } from "@/components/sort"
 import { Loader } from 'lucide-react';
+import { useFilters } from "@/lib/utils";
 
 export default function Results() {
-    const [listings, setListings] = useState<DiscSearch>([]);
+    const [listings, setListings] = useState<DiscSearch[]>([]);
     const [loadingState, setLoadingState] = useState<undefined | 'loading' | 'loaded' | 'no results'>();
     const searchParams = useSearchParams();
+    const { query, typeFilter, brandFilter, moldFilter, page, sort, speedFilter, glideFilter, turnFilter, fadeFilter } = useFilters();
 
     useEffect(() => {
         
         const fetchListings = async () => {
             
             if (!Supabase) return;
-
-            const query = searchParams.get('query') || "";
-            const manufacturers = searchParams.getAll("manufacturer");
-            const molds = searchParams.getAll("mold");
-            const types = searchParams.getAll("type");
-            const page = searchParams.get("page");
-            const sort = searchParams.get("sort") || defaultSort;
             
             setLoadingState('loading')
-
             const { data, error } = await Supabase.rpc("disc_search", {
                 query: query,
-                manufacturer_filter: manufacturers,
-                model_filter: molds,
-                type_filter: types,
-                page: Number(page),
+                brand_filter: brandFilter,
+                mold_filter: moldFilter,
+                type_filter: typeFilter,
+                speed_filter: speedFilter,
+                glide_filter: glideFilter,
+                turn_filter: turnFilter,
+                fade_filter: fadeFilter,
+                page,
                 sort
             })
 
@@ -61,7 +58,7 @@ export default function Results() {
         }
 
         fetchListings();
-    }, [searchParams]);
+    }, [query, typeFilter, brandFilter, moldFilter, page, sort, speedFilter, glideFilter, turnFilter, fadeFilter]);
     
     return (
         <div className="flex min-h-screen flex-col items-center justify-between w-full">

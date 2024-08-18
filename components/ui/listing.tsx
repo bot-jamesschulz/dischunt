@@ -1,10 +1,10 @@
 "use client"
 
-import { type DiscListing } from "@/db/types";
+import { type DiscSearch} from "@/db/types";
 import Image from "next/image";
 
-export default function Listing({ discListing }:  { discListing: DiscListing } ) {
-    const {details_url, listing, img_src, manufacturer, model } = discListing;
+export default function Listing({ discListing }:  { discListing: DiscSearch } ) {
+    const {details_url, listing, img_src, brand, mold, speed, glide, turn, fade } = discListing;
     const price = discListing.price >= 1000 ? discListing.price / 100 : discListing.price;
     const formattedPrice = price.toLocaleString("en-US", {
         style: "currency",
@@ -15,8 +15,8 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
 
     return (
         <a href={details_url} rel="external" target="_blank" className='text-ellipsis max-w-80'>
-            <div className="flex flex-col justify-end items-center h-96 overflow-hidden gap-4">
-                <div className="h-52 md:h-60">
+            <div className="flex flex-col justify-end items-center h-[400px] overflow-hidden gap-4">
+                <div className="h-52 md:h-66">
                     <Image
                         src={img_src}
                         width={500}
@@ -32,13 +32,16 @@ export default function Listing({ discListing }:  { discListing: DiscListing } )
                         }}
                     />
                 </div>
-                <div className="flex flex-col items-center text-ellipsis w-full justify-between h-36">
+                <div className="flex flex-col items-center text-ellipsis w-full justify-between h-44">
                     <p className="text-sm">
-                        {manufacturer}
+                        {brand}
                     </p>
                     <h4 className="text-xl font-semibold tracking-tight">
-                        {model}
+                        {mold}
                     </h4>
+                    <p className="text-sm text-center w-full h-10 text-ellipsis overflow-hidden line-clamp-2">
+                        {speed} | {glide} | {turn} | {fade}
+                    </p>
                     <p className="text-sm text-center w-full h-10 text-ellipsis overflow-hidden line-clamp-2">
                         {listing}
                     </p>

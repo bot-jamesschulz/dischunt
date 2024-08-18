@@ -11,46 +11,48 @@ import {
 import Paginate from "@/components/pagination";
 import { 
     Filters,
-    type Manufacturers
+    type Brands
  } from "@/components/filters";
 import Supabase from "@/db/config";
 import allMolds from "@/public/molds";
 import SheetFilter from "@/components/sheetFilter";
 import Sort from "@/components/sort";
 import { useFilters } from "@/lib/utils";
+import { Slider } from "@/components/ui/slider"
 
 export default function Results() {
     const [resultsCount, setResultsCount] = useState(0);
     const [isLargeScreen, setIsLargeScreen] = useState(true);
-    const { query, typeFilter, manufacturerFilter, moldFilter} = useFilters();
+    const { query, typeFilter, brandFilter, moldFilter, speedFilter, glideFilter, turnFilter, fadeFilter } = useFilters();
 
     const molds = useMemo(() => {
         const result: string[] = [];
-        manufacturerFilter.forEach(m => {
+        brandFilter.forEach(m => {
           if (m in allMolds) {
             result.push(...allMolds[m as keyof typeof allMolds]);
           }
         });
         return result;
-    }, [manufacturerFilter]);
-
-    console.log("results count", resultsCount);
+    }, [brandFilter]);
     
     useEffect(() => {
         const fetchResultsCount = async () => {
             if (!Supabase) return;
             const { data } = await Supabase.rpc("disc_search_results_count", {
                 query: query,
-                manufacturer_filter: manufacturerFilter,
-                model_filter: moldFilter,
-                type_filter: typeFilter
+                brand_filter: brandFilter,
+                mold_filter: moldFilter,
+                type_filter: typeFilter,
+                speed_filter: speedFilter,
+                glide_filter: glideFilter,
+                turn_filter: turnFilter,
+                fade_filter: fadeFilter
             })
-            console.log(data)
             setResultsCount(data || 0);
             
         }
         fetchResultsCount();
-    },[moldFilter, manufacturerFilter, typeFilter, query, setResultsCount]);
+    },[moldFilter, brandFilter, typeFilter, speedFilter, glideFilter, turnFilter, fadeFilter, query, setResultsCount]);
 
     // Watch window size to know when to render filter positions
     useEffect(() => {
@@ -69,7 +71,7 @@ export default function Results() {
     return (
         <Suspense>
             <main className="flex min-h-screen flex-col w-full items-center justify-between my-12 max-w-[1700px]">
-                <InputForm />
+                <InputForm className="w-1/2"/>
                 {isLargeScreen ? 
                     <Sort className='self-end mr-16'/> :
                     <div className='flex justify-center w-3/4 mx-auto'><SheetFilter className='grow basis-0'/><Sort className='grow basis-0'/></div>
