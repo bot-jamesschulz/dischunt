@@ -305,7 +305,7 @@ export function Filters() {
                 <div className="flex items-center justify-between w-full">
                     {speedFilter.map((_, index) => (
                     <div key={index} className="flex items-center justify-between h-10">
-                        <span>{speedFilter[index]}</span>
+                        <span>{speedValues[index]}</span>
                     </div>
                     ))}
                 </div>
@@ -333,7 +333,7 @@ export function Filters() {
                 <div className="flex items-center justify-between w-full">
                     {glideFilter.map((_, index) => (
                     <div key={index} className="flex items-center justify-between h-10">
-                        <span>{glideFilter[index]}</span>
+                        <span>{glideValues[index]}</span>
                     </div>
                     ))}
                 </div>
@@ -361,7 +361,7 @@ export function Filters() {
                 <div className="flex items-center justify-between w-full">
                     {turnFilter.map((_, index) => (
                     <div key={index} className="flex items-center justify-between h-10">
-                        <span>{turnFilter[index]}</span>
+                        <span>{turnValues[index]}</span>
                     </div>
                     ))}
                 </div>
@@ -389,7 +389,7 @@ export function Filters() {
                 <div className="flex items-center justify-between w-full">
                     {fadeFilter.map((_, index) => (
                     <div key={index} className="flex items-center justify-between h-10">
-                        <span>{fadeFilter[index]}</span>
+                        <span>{fadeValues[index]}</span>
                     </div>
                     ))}
                 </div>
