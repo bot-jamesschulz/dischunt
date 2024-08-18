@@ -33,10 +33,10 @@ export type SliderValues = [number, number];
 export const maxSpeed = 15.0;
 export const minSpeed = 1.0;
 export const maxGlide = 7.0;
-export const minGlide = 3.0;
+export const minGlide = 0.0;
 export const maxTurn = 0.0;
-export const minTurn = -4.5;
-export const maxFade = 4.0;
+export const minTurn = -5.0;
+export const maxFade = 6.0;
 export const minFade = 0.0;
 
 export function Filters() {
