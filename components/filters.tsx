@@ -34,7 +34,7 @@ export const maxSpeed = 15.0;
 export const minSpeed = 1.0;
 export const maxGlide = 7.0;
 export const minGlide = 0.0;
-export const maxTurn = 0.0;
+export const maxTurn = 1.0;
 export const minTurn = -5.0;
 export const maxFade = 6.0;
 export const minFade = 0.0;
@@ -84,7 +84,15 @@ export function Filters() {
     useEffect(() => {
         const fetchCounts = async () => {
             if (!Supabase) return;
-
+            console.log('Mold count with the filters ', {
+                query: query,
+                brand_filter: brandFilter,
+                type_filter: typeFilter,
+                speed_filter: speedFilter,
+                glide_filter: glideFilter,
+                turn_filter: turnFilter,
+                fade_filter: fadeFilter
+            })
             const { data } = await Supabase.rpc("get_mold_counts", {
                 query: query,
                 brand_filter: brandFilter,
@@ -94,6 +102,8 @@ export function Filters() {
                 turn_filter: turnFilter,
                 fade_filter: fadeFilter
             })
+
+            console.log('data', data)
 
             setMoldCounts(data || []); 
         }
