@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Listing({ discListing }:  { discListing: DiscSearch } ) {
     const {details_url, listing, img_src, brand, mold, speed, glide, turn, fade } = discListing;
-    const price = discListing.price / 100;
+    const price = discListing.price < 100 ? discListing.price : discListing.price / 100;
     const formattedPrice = price.toLocaleString("en-US", {
         style: "currency",
         currency: "USD"
